@@ -1,0 +1,78 @@
+defmodule Server.Database do
+  use GenServer
+
+  ## Client API
+
+  def start_link(opts) do
+    server = Keyword.fetch!(opts, :name)
+    GenServer.start_link(__MODULE__, server, opts)
+  end
+
+  def create(server, name, value \\ 0) do
+    GenServer.call(server, {:create, name, value})
+  end
+
+  def lookup(server, name) do
+    case :ets.lookup(server, name) do
+      [{^name, value}] -> {:ok, value}
+      [] -> :error
+    end
+  end
+
+  def delete(server, name) do
+    :ets.delete(server, name)
+  end
+
+  def update(server, name, value) do
+    GenServer.call(server, {:update, name, value})
+  end
+
+  def search(database, criteria) when is_atom(database) and is_list(criteria) do
+    all_records = :ets.tab2list(database)
+
+    matching_records =
+      all_records
+      |> Enum.map(fn {_id, record} -> record end)
+      |> Enum.filter(&matches_any_criteria?(&1, criteria))
+
+    {:ok, matching_records}
+  end
+
+  def search(_database, _criteria) do
+    {:error, "Invalid arguments: database must be an atom, criteria must be a list"}
+  end
+
+  defp matches_any_criteria?(record, criteria) do
+    Enum.any?(criteria, fn {key, value} ->
+      Map.get(record, key) == value
+    end)
+  end
+
+  ## Server callbacks
+  @impl true
+  def init(server) do
+    products = :ets.new(server, [:public, :named_table, :ordered_set, read_concurrency: true])
+    {:ok, products}
+  end
+
+  @impl true
+  def handle_call({:create, name, value}, _from, products) do
+    case :ets.insert_new(products, {name, value}) do
+      true -> {:reply, :ok, products}
+      false -> {:reply, {:error, :already_exists}, products}
+      _ -> {:reply, {:error, :unknown}, products}
+    end
+  end
+
+  @impl true
+  def handle_call({:update, name, value}, _from, products) do
+    case lookup(products, name) do
+      {:ok, _} ->
+        :ets.insert(products, {name, value})
+        {:reply, :ok, products}
+
+      :error ->
+        {:reply, {:error, :not_found}, products}
+    end
+  end
+end
