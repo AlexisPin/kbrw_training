@@ -1,4 +1,4 @@
-defmodule TutoKBRWStack.MixProject do
+defmodule TutoKbrwStack.MixProject do
   use Mix.Project
 
   def project do
@@ -19,10 +19,9 @@ defmodule TutoKBRWStack.MixProject do
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:poison, "~> 6.0.0"},
+      {:poison, "~> 4.0"},
       {:plug_cowboy, "~> 2.4"}
     ]
   end

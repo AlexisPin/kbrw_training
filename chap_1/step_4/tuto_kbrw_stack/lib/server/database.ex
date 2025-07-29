@@ -51,28 +51,27 @@ defmodule Server.Database do
   ## Server callbacks
   @impl true
   def init(server) do
-    products = :ets.new(server, [:public, :named_table, :ordered_set, read_concurrency: true])
-    {:ok, products}
+    items = :ets.new(server, [:public, :named_table, :ordered_set, read_concurrency: true])
+    {:ok, items}
   end
 
   @impl true
-  def handle_call({:create, name, value}, _from, products) do
-    case :ets.insert_new(products, {name, value}) do
-      true -> {:reply, :ok, products}
-      false -> {:reply, {:error, :already_exists}, products}
-      _ -> {:reply, {:error, :unknown}, products}
+  def handle_call({:create, name, value}, _from, items) do
+    case :ets.insert_new(items, {name, value}) do
+      true -> {:reply, :ok, items}
+      false -> {:reply, {:error, :already_exists}, items}
     end
   end
 
   @impl true
-  def handle_call({:update, name, value}, _from, products) do
-    case lookup(products, name) do
+  def handle_call({:update, name, value}, _from, items) do
+    case lookup(items, name) do
       {:ok, _} ->
-        :ets.insert(products, {name, value})
-        {:reply, :ok, products}
+        :ets.insert(items, {name, value})
+        {:reply, :ok, items}
 
       :error ->
-        {:reply, {:error, :not_found}, products}
+        {:reply, {:error, :not_found}, items}
     end
   end
 end

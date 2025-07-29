@@ -8,7 +8,8 @@ defmodule Server.ServSupervisor do
   @impl true
   def init(:ok) do
     children = [
-      {Server.Database, name: Server.Database}
+      {Server.Database, name: Server.Database},
+      {Plug.Cowboy, scheme: :http, plug: Server.TheFirstPlug, options: [port: 4001]}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
