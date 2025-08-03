@@ -1,9 +1,20 @@
+var path = require('path'),
+  MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+  CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+
 module.exports = {
-  entry: './script.js',
+  entry: './app.js',
   mode: 'development',
   devtool: 'inline-source-map',
-  output: { filename: 'bundle.js' },
-  plugins: [],
+  output: {
+    path: path.join(__dirname, '../priv/static'),
+    filename: '[name].js',
+  },
+  optimization: {
+    splitChunks: { cacheGroups: { styles: { name: 'styles', test: /\.css$/, chunks: 'all', enforce: true } } },
+    minimizer: [`...`, new CssMinimizerPlugin()]
+  },
+  plugins: [new MiniCssExtractPlugin({ insert: "", filename: "[name].css" })],
   module: {
     rules: [
       {
@@ -20,6 +31,10 @@ module.exports = {
           }
         },
         exclude: /node_modules/
+      },
+      {
+        test: /\.(css)$/,
+        use: [{ loader: MiniCssExtractPlugin.loader }, { loader: "css-loader" }]
       }
     ]
   },
