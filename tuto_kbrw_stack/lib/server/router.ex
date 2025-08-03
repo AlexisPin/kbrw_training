@@ -33,6 +33,7 @@ defmodule Server.TheFirstPlug do
   use Plug.Router
   alias Server.Database
 
+  plug(Plug.Static, from: "priv/static", at: "/static")
   plug(:match)
   plug(:dispatch)
 
@@ -222,6 +223,8 @@ defmodule Server.TheFirstPlug do
       items: items
     })
   end
+
+  get(_, do: send_file(conn, 200, "priv/static/index.html"))
 
   match _ do
     resp_with_json(conn, 404, %{error: "Page not found"})

@@ -1,271 +1,78 @@
-assets by path *.js 2.47 MiB
-  asset main.js 2.47 MiB [emitted] (name: main)
+assets by path *.js 2.56 MiB
+  asset main.js 2.56 MiB [emitted] (name: main)
   asset styles.js 809 bytes [compared for emit] (name: styles) (id hint: styles)
-asset styles.css 133 KiB [compared for emit] (name: styles) (id hint: styles)
-asset index.html 667 bytes [compared for emit] [from: index.html] (auxiliary name: main)
-Entrypoint main 2.6 MiB (667 bytes) = styles.css 133 KiB styles.js 809 bytes main.js 2.47 MiB 1 auxiliary asset
+asset styles.css 132 KiB [compared for emit] (name: styles) (id hint: styles)
+asset index.html 691 bytes [compared for emit] [from: index.html] (auxiliary name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
 runtime modules 4.26 KiB 7 modules
-modules by path ./node_modules/ 970 KiB
+modules by path ./node_modules/ 999 KiB
+  modules by path ./node_modules/qs/lib/*.js 25 KiB 5 modules
   modules by path ./node_modules/scheduler/ 32.4 KiB 4 modules
   modules by path ./node_modules/prop-types/ 4.15 KiB 3 modules
   modules by path ./node_modules/react-dom/ 840 KiB 2 modules
   modules by path ./node_modules/react/ 59.4 KiB 2 modules
   modules by path ./node_modules/create-react-class/*.js 32 KiB 2 modules
+  ./node_modules/cookie/index.js 3.95 KiB [built] [code generated]
   ./node_modules/object-assign/index.js 2.06 KiB [built] [code generated]
-modules by path ./webflow/css/*.css 50 bytes (javascript) 44.4 KiB (css/mini-extract)
+modules by path ./webflow/css/*.css 50 bytes (javascript) 44.3 KiB (css/mini-extract)
   ./webflow/css/tuto.webflow.css 50 bytes [built] [code generated]
-  css ./node_modules/css-loader/dist/cjs.js!./webflow/css/tuto.webflow.css 44.4 KiB [built] [code generated]
-./app.js 8.23 KiB [built] [code generated]
+  css ./node_modules/css-loader/dist/cjs.js!./webflow/css/tuto.webflow.css 44.3 KiB [built] [code generated]
+./app.js 17.3 KiB [built] [code generated]
 ./node_modules/file-loader/dist/cjs.js?name=[name].[ext]!./index.html 54 bytes [built] [code generated]
-webpack 5.101.0 compiled successfully in 1335 ms
-assets by status 2.47 MiB [cached] 3 assets
-asset styles.css 132 KiB [emitted] (name: styles) (id hint: styles)
-Entrypoint main 2.6 MiB (667 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.47 MiB 1 auxiliary asset
-cached modules 978 KiB (javascript) 4.26 KiB (runtime) [cached] 23 modules
-modules by layer 50 bytes (javascript) 44.3 KiB (css/mini-extract)
-  ./webflow/css/tuto.webflow.css 50 bytes [built]
-  css ./node_modules/css-loader/dist/cjs.js!./webflow/css/tuto.webflow.css 44.3 KiB [built] [code generated]
-webpack 5.101.0 compiled successfully in 111 ms
-assets by status 2.47 MiB [cached] 3 assets
-asset styles.css 132 KiB [emitted] (name: styles) (id hint: styles)
-Entrypoint main 2.6 MiB (667 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.47 MiB 1 auxiliary asset
-cached modules 978 KiB (javascript) 4.26 KiB (runtime) [cached] 23 modules
-modules by layer 50 bytes (javascript) 44.3 KiB (css/mini-extract)
-  ./webflow/css/tuto.webflow.css 50 bytes [built]
-  css ./node_modules/css-loader/dist/cjs.js!./webflow/css/tuto.webflow.css 44.3 KiB [built] [code generated]
-webpack 5.101.0 compiled successfully in 68 ms
-assets by status 2.47 MiB [cached] 3 assets
-asset styles.css 132 KiB [emitted] (name: styles) (id hint: styles)
-Entrypoint main 2.6 MiB (667 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.47 MiB 1 auxiliary asset
-cached modules 978 KiB (javascript) 4.26 KiB (runtime) [cached] 23 modules
-modules by layer 50 bytes (javascript) 44.3 KiB (css/mini-extract)
-  ./webflow/css/tuto.webflow.css 50 bytes [built]
-  css ./node_modules/css-loader/dist/cjs.js!./webflow/css/tuto.webflow.css 44.3 KiB [built] [code generated]
-webpack 5.101.0 compiled successfully in 59 ms
-assets by status 2.47 MiB [cached] 3 assets
-asset styles.css 132 KiB [emitted] (name: styles) (id hint: styles)
-Entrypoint main 2.6 MiB (667 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.47 MiB 1 auxiliary asset
-cached modules 978 KiB (javascript) 4.26 KiB (runtime) [cached] 23 modules
-modules by layer 50 bytes (javascript) 44.3 KiB (css/mini-extract)
-  ./webflow/css/tuto.webflow.css 50 bytes [built]
-  css ./node_modules/css-loader/dist/cjs.js!./webflow/css/tuto.webflow.css 44.3 KiB [built] [code generated]
-webpack 5.101.0 compiled successfully in 50 ms
+webpack 5.101.0 compiled successfully in 1035 ms
 assets by status 134 KiB [cached] 3 assets
-asset main.js 2.46 MiB [emitted] (name: main)
-Entrypoint main 2.59 MiB (667 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.46 MiB 1 auxiliary asset
-cached modules 970 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 17 modules
+asset main.js 2.56 MiB [emitted] (name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
+cached modules 999 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 23 modules
 runtime modules 4.26 KiB 7 modules
-./app.js 2.33 KiB [built] [code generated]
-webpack 5.101.0 compiled successfully in 313 ms
-asset main.js 9.05 KiB [emitted] (name: main)
-./app.js 39 bytes [built] [code generated] [1 error]
-
-ERROR in ./app.js
-Module build failed (from ./node_modules/babel-loader/lib/index.js):
-SyntaxError: /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/app.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (23:10)
-
-  21 |       {orders.map(order => (
-  22 |           <Z sel=".col-1">{order.remoteid}</Z>
-> 23 |           <Z sel=".col-2">{order.custom.customer.full_name}</Z>
-     |           ^
-  24 |           <Z sel=".col-3">{order.custom.billing_address}</Z>
-  25 |           <Z sel=".col-4">{order.items}</Z>
-  26 |         </JSXZ>
-    at constructor (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:367:19)
-    at JSXParserMixin.raise (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:6627:19)
-    at JSXParserMixin.jsxParseElementAt (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4772:18)
-    at JSXParserMixin.jsxParseElement (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4779:17)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4789:19)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:39
-    at JSXParserMixin.allowInAnd (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12427:12)
-    at JSXParserMixin.parseMaybeAssignAllowIn (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:17)
-    at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12494:17)
-    at JSXParserMixin.parseParenAndDistinguishExpression (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11674:28)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11326:23)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4794:20)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at JSXParserMixin.parseFunctionBody (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12094:24)
-    at JSXParserMixin.parseArrowExpression (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12076:10)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11438:25)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4794:20)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:39
-    at JSXParserMixin.allowInAnd (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12427:12)
-    at JSXParserMixin.parseMaybeAssignAllowIn (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:17)
-    at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12494:17)
-    at JSXParserMixin.parseExprListItem (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12176:18)
-    at JSXParserMixin.parseCallExpressionArguments (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11247:22)
-    at JSXParserMixin.parseCoverCallAndAsyncArrowHead (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11181:29)
-    at JSXParserMixin.parseSubscript (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11115:19)
-    at JSXParserMixin.parseSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11089:19)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11080:17)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-
-webpack 5.101.0 compiled with 1 error in 19 ms
-assets by status 9.05 KiB [cached] 1 asset
-./app.js 39 bytes [built] [1 error]
-
-ERROR in ./app.js
-Module build failed (from ./node_modules/babel-loader/lib/index.js):
-SyntaxError: /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/app.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (23:10)
-
-  21 |       {orders.map(order => (
-  22 |           <Z sel=".col-1">{order.remoteid}</Z>
-> 23 |           <Z sel=".col-2">{order.custom.customer.full_name}</Z>
-     |           ^
-  24 |           <Z sel=".col-3">{order.custom.billing_address}</Z>
-  25 |           <Z sel=".col-4">{order.items}</Z>
-  26 |       ))}
-    at constructor (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:367:19)
-    at JSXParserMixin.raise (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:6627:19)
-    at JSXParserMixin.jsxParseElementAt (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4772:18)
-    at JSXParserMixin.jsxParseElement (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4779:17)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4789:19)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:39
-    at JSXParserMixin.allowInAnd (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12427:12)
-    at JSXParserMixin.parseMaybeAssignAllowIn (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:17)
-    at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12494:17)
-    at JSXParserMixin.parseParenAndDistinguishExpression (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11674:28)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11326:23)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4794:20)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at JSXParserMixin.parseFunctionBody (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12094:24)
-    at JSXParserMixin.parseArrowExpression (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12076:10)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11438:25)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4794:20)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:39
-    at JSXParserMixin.allowInAnd (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12427:12)
-    at JSXParserMixin.parseMaybeAssignAllowIn (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:17)
-    at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12494:17)
-    at JSXParserMixin.parseExprListItem (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12176:18)
-    at JSXParserMixin.parseCallExpressionArguments (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11247:22)
-    at JSXParserMixin.parseCoverCallAndAsyncArrowHead (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11181:29)
-    at JSXParserMixin.parseSubscript (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11115:19)
-    at JSXParserMixin.parseSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11089:19)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11080:17)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-
-webpack 5.101.0 compiled with 1 error in 15 ms
-assets by status 9.05 KiB [cached] 1 asset
-./app.js 39 bytes [built] [1 error]
-
-ERROR in ./app.js
-Module build failed (from ./node_modules/babel-loader/lib/index.js):
-SyntaxError: /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/app.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (24:10)
-
-  22 |         <>
-  23 |         </>
-> 24 |           <Z sel=".col-1">{order.remoteid}</Z>
-     |           ^
-  25 |           <Z sel=".col-2">{order.custom.customer.full_name}</Z>
-  26 |           <Z sel=".col-3">{order.custom.billing_address}</Z>
-  27 |           <Z sel=".col-4">{order.items}</Z>
-    at constructor (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:367:19)
-    at JSXParserMixin.raise (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:6627:19)
-    at JSXParserMixin.jsxParseElementAt (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4772:18)
-    at JSXParserMixin.jsxParseElement (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4779:17)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4789:19)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:39
-    at JSXParserMixin.allowInAnd (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12427:12)
-    at JSXParserMixin.parseMaybeAssignAllowIn (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:17)
-    at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12494:17)
-    at JSXParserMixin.parseParenAndDistinguishExpression (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11674:28)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11326:23)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4794:20)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at JSXParserMixin.parseFunctionBody (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12094:24)
-    at JSXParserMixin.parseArrowExpression (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12076:10)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11438:25)
-    at JSXParserMixin.parseExprAtom (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:4794:20)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11076:23)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-    at JSXParserMixin.parseExprOps (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10899:23)
-    at JSXParserMixin.parseMaybeConditional (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10876:23)
-    at JSXParserMixin.parseMaybeAssign (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10826:21)
-    at /home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:39
-    at JSXParserMixin.allowInAnd (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12427:12)
-    at JSXParserMixin.parseMaybeAssignAllowIn (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10795:17)
-    at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12494:17)
-    at JSXParserMixin.parseExprListItem (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:12176:18)
-    at JSXParserMixin.parseCallExpressionArguments (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11247:22)
-    at JSXParserMixin.parseCoverCallAndAsyncArrowHead (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11181:29)
-    at JSXParserMixin.parseSubscript (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11115:19)
-    at JSXParserMixin.parseSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11089:19)
-    at JSXParserMixin.parseExprSubscripts (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11080:17)
-    at JSXParserMixin.parseUpdate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11061:21)
-    at JSXParserMixin.parseMaybeUnary (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:11041:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/alexis/Developer/kbrw_training/tuto_kbrw_stack/web/node_modules/@babel/parser/lib/index.js:10894:61)
-
-webpack 5.101.0 compiled with 1 error in 12 ms
+./app.js 17.3 KiB [built] [code generated]
+webpack 5.101.0 compiled successfully in 124 ms
 assets by status 134 KiB [cached] 3 assets
-asset main.js 2.46 MiB [emitted] (name: main)
-Entrypoint main 2.59 MiB (667 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.46 MiB 1 auxiliary asset
-cached modules 970 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 17 modules
+asset main.js 2.56 MiB [emitted] (name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
+cached modules 999 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 23 modules
 runtime modules 4.26 KiB 7 modules
-./app.js 1.61 KiB [built] [code generated]
-webpack 5.101.0 compiled successfully in 71 ms
+./app.js 17.3 KiB [built] [code generated]
+webpack 5.101.0 compiled successfully in 114 ms
 assets by status 134 KiB [cached] 3 assets
-asset main.js 2.46 MiB [emitted] (name: main)
-Entrypoint main 2.59 MiB (667 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.46 MiB 1 auxiliary asset
-cached modules 970 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 17 modules
+asset main.js 2.56 MiB [emitted] (name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
+cached modules 999 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 23 modules
 runtime modules 4.26 KiB 7 modules
-./app.js 2.33 KiB [built] [code generated]
-webpack 5.101.0 compiled successfully in 71 ms
+./app.js 17.3 KiB [built] [code generated]
+webpack 5.101.0 compiled successfully in 83 ms
+assets by status 134 KiB [cached] 3 assets
+asset main.js 2.56 MiB [emitted] (name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
+cached modules 999 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 23 modules
+runtime modules 4.26 KiB 7 modules
+./app.js 17.3 KiB [built] [code generated]
+webpack 5.101.0 compiled successfully in 93 ms
+assets by status 134 KiB [cached] 3 assets
+asset main.js 2.56 MiB [emitted] (name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
+cached modules 999 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 23 modules
+runtime modules 4.26 KiB 7 modules
+./app.js 17.3 KiB [built] [code generated]
+webpack 5.101.0 compiled successfully in 88 ms
+assets by status 134 KiB [cached] 3 assets
+asset main.js 2.56 MiB [emitted] (name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
+cached modules 999 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 23 modules
+runtime modules 4.26 KiB 7 modules
+./app.js 17.3 KiB [built] [code generated]
+webpack 5.101.0 compiled successfully in 83 ms
+assets by status 134 KiB [cached] 3 assets
+asset main.js 2.56 MiB [emitted] (name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
+cached modules 999 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 23 modules
+runtime modules 4.26 KiB 7 modules
+./app.js 17.3 KiB [built] [code generated]
+webpack 5.101.0 compiled successfully in 79 ms
+assets by status 134 KiB [cached] 3 assets
+asset main.js 2.56 MiB [emitted] (name: main)
+Entrypoint main 2.69 MiB (691 bytes) = styles.css 132 KiB styles.js 809 bytes main.js 2.56 MiB 1 auxiliary asset
+cached modules 999 KiB (javascript) 44.3 KiB (css/mini-extract) [cached] 23 modules
+runtime modules 4.26 KiB 7 modules
+./app.js 17.3 KiB [built] [code generated]
+webpack 5.101.0 compiled successfully in 78 ms
