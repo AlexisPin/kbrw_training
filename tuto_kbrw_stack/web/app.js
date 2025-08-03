@@ -16,23 +16,6 @@ var orders = [
   { remoteid: "000000192", custom: { customer: { full_name: "Lucky Luke" }, billing_address: "A Cowboy doesn't have an address. Sorry" }, items: 0 },
 ]
 
-
-var Page = createReactClass({
-  render() {
-    return <JSXZ in="orders" sel=".container">
-      {/* {orders.map(order => (
-        <JSXZ in="orders" sel=".tab-orders-line">
-          <Z sel=".col-1">{order.remoteid}</Z>
-          <Z sel=".col-2">{order.custom.customer.full_name}</Z>
-          <Z sel=".col-3">{order.custom.billing_address}</Z>
-          <Z sel=".col-4">{order.items}</Z>
-        </JSXZ>
-      ))} */}
-      <ChildrenZ />
-    </JSXZ>
-  }
-})
-
 var Child = createReactClass({
   render() {
     var [ChildHandler, ...rest] = this.props.handlerPath
@@ -48,7 +31,7 @@ var routes = {
       return "/";
     },
     match: (path, qs) => {
-      return (path == "/") && { handlerPath: [Layout, Header, Orders] }
+      return (path == "/orders") && { handlerPath: [Layout, Header, Orders] }
     }
   },
   "order": {
@@ -95,7 +78,6 @@ function onPathChange() {
     return ReactDOM.render(<ErrorPage message={"Not Found"} code={404} />, document.getElementById('root'))
 
   // If we found a match, we render the Child component, which will render the handlerPath components recursively, remember ? ;)
-  console.log(browserState)
   ReactDOM.render(<Child {...browserState} />, document.getElementById('root'))
 }
 
@@ -113,6 +95,7 @@ var Header = createReactClass({
   render() {
     return <JSXZ in="orders" sel=".header">
       <Z sel=".header-container">
+        <ChildrenZ />
         <this.props.Child {...this.props} />
       </Z>
     </JSXZ>
@@ -123,6 +106,15 @@ var Orders = createReactClass({
   render() {
     return <JSXZ in="orders" sel=".orders">
       <Z sel=".orders-container">
+        <ChildrenZ />
+        {orders.map(order => (
+          <JSXZ key={order.remoteid} in="orders" sel=".tab-orders-line">
+            <Z sel=".col-1">{order.remoteid}</Z>
+            <Z sel=".col-2">{order.custom.customer.full_name}</Z>
+            <Z sel=".col-3">{order.custom.billing_address}</Z>
+            <Z sel=".col-4">{order.items}</Z>
+          </JSXZ>
+        ))}
 
       </Z>
     </JSXZ>
