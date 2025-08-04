@@ -33,7 +33,6 @@ defmodule Server.TheFirstPlug do
   use Plug.Router
   alias Server.Database
 
-  plug(Plug.Static, from: "priv/static", at: "/static")
   plug(:match)
   plug(:dispatch)
 
@@ -43,13 +42,13 @@ defmodule Server.TheFirstPlug do
     |> send_resp(status, Poison.encode!(data))
   end
 
-  get("/", do: send_resp(conn, 200, "Welcome"))
+  # get("/", do: send_resp(conn, 200, "Welcome"))
 
   get "/health" do
     resp_with_json(conn, 200, %{status: "ok"})
   end
 
-  post "/items" do
+  post "/orders" do
     case body(conn) do
       {:ok, body, _conn} ->
         case Poison.decode(body) do
@@ -87,7 +86,7 @@ defmodule Server.TheFirstPlug do
     end
   end
 
-  get "/items/:id" do
+  get "/order/:id" do
     id = URI.decode(id)
 
     case Database.lookup(Database, id) do
@@ -102,7 +101,7 @@ defmodule Server.TheFirstPlug do
     end
   end
 
-  put "/items/:id" do
+  put "/order/:id" do
     id = URI.decode(id)
 
     case body(conn) do
@@ -142,7 +141,7 @@ defmodule Server.TheFirstPlug do
     end
   end
 
-  delete "/items/:id" do
+  delete "/order/:id" do
     id = URI.decode(id)
 
     case Server.Database.lookup(Database, id) do
@@ -211,7 +210,7 @@ defmodule Server.TheFirstPlug do
     end
   end
 
-  get "/items" do
+  get "/orders" do
     records = :ets.tab2list(Database)
 
     items =
@@ -223,8 +222,6 @@ defmodule Server.TheFirstPlug do
       items: items
     })
   end
-
-  get(_, do: send_file(conn, 200, "priv/static/index.html"))
 
   match _ do
     resp_with_json(conn, 404, %{error: "Page not found"})
