@@ -105,8 +105,9 @@ var Header = createReactClass({
 var Orders = createReactClass({
   render() {
     return <JSXZ in="orders" sel=".orders">
-      <Z sel=".orders-container">
-        <ChildrenZ />
+      <Z sel=".tab-orders-header"><ChildrenZ /></Z>
+      <Z sel=".tab-orders-body">
+
         {orders.map(order => (
           <JSXZ key={order.remoteid} in="orders" sel=".tab-orders-line">
             <Z sel=".col-1">{order.remoteid}</Z>
@@ -141,4 +142,4 @@ var ErrorPage = createReactClass({
 })
 
 window.addEventListener('popstate', onPathChange);
-onPathChange(); 
+onPathChange();
