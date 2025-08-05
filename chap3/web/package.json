@@ -1,0 +1,19 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@kbrw/babel-preset-jsxz": "~1.0.2",
+    "babel-loader": "^8.4.1",
+    "create-react-class": "^15.7.0",
+    "jsx": "^0.9.89",
+    "webpack": "^5.101.0",
+    "webpack-cli": "^6.0.1"
+  }
+}

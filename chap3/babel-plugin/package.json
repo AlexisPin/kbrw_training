@@ -1,0 +1,19 @@
+{
+  "name": "babel-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@babel/types": "^7.28.2",
+    "@babel/plugin-syntax-jsx": "^7.27.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.1"
+  }
+}
