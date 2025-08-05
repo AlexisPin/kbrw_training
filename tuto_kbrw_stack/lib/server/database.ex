@@ -20,6 +20,7 @@ defmodule Server.Database do
   end
 
   def delete(server, name) do
+    :timer.sleep(1000)
     :ets.delete(server, name)
   end
 

@@ -6,7 +6,14 @@ var createReactClass = require('create-react-class')
 var Qs = require('qs')
 var Cookie = require('cookie')
 var XMLHttpRequest = require("xhr2")
-var HTTP = new (function () {
+
+/* required css for our application */
+require('./webflow/css/orders.css');
+require('./webflow/css/order.css');
+require('./webflow/css/loader.css');
+require('./webflow/css/modal.css');
+
+const HTTP = new (function () {
   this.get = (url) => this.req('GET', url)
   this.delete = (url) => this.req('DELETE', url)
   this.post = (url, data) => this.req('POST', url, data)
@@ -32,16 +39,27 @@ var HTTP = new (function () {
   })
 })()
 
-/* required css for our application */
-require('./webflow/css/tuto.webflow.css');
-
-var GoTo = (route, params, query) => {
+function goTo(route, params, query) {
   var qs = Qs.stringify(query)
   var url = routes[route].path(params) + ((qs == '') ? '' : ('?' + qs))
   history.pushState({}, "", url)
-  console.log("Navigated to:", url);
-  
   onPathChange()
+}
+
+function cn() {
+  var args = arguments, classes = {}
+  for (var i in args) {
+    var arg = args[i]
+    if (!arg) continue
+    if ('string' === typeof arg || 'number' === typeof arg) {
+      arg.split(" ").filter((c) => c != "").map((c) => {
+        classes[c] = true
+      })
+    } else if ('object' === typeof arg) {
+      for (var key in arg) classes[key] = arg[key]
+    }
+  }
+  return Object.keys(classes).map((k) => classes[k] && k || '').join(' ')
 }
 
 var Child = createReactClass({
@@ -51,18 +69,10 @@ var Child = createReactClass({
   }
 })
 
-var browserState = { Child: Child, goTo: GoTo }
+var browserState = { Child: Child }
 
 var remoteProps = {
-  // user: (props) => {
-  //   return {
-  //     url: "/api/me",
-  //     prop: "user"
-  //   }
-  // },
   orders: (props) => {
-    // if (!props.user)
-    //   return
     var qs = { ...props.qs }
     var query = Qs.stringify(qs)
     return {
@@ -92,62 +102,85 @@ var routes = {
       return "/order/" + params;
     },
     match: (path, qs) => {
-      var r = new RegExp("/order/([^/]*)$").exec(path)
+      const r = new RegExp("/order/([^/]*)$").exec(path)
       return r && { handlerPath: [Layout, Header, Order], order_id: r[1] }
     }
   }
 }
 
-function onPathChange() {
-  var path = location.pathname
-  var qs = Qs.parse(location.search.slice(1))
-
-  var cookies = Cookie.parse(document.cookie)
-
-  browserState = {
-    ...browserState,
-    path: path,
-    qs: qs,
-    cookie: cookies
-  }
-
-  var route
-
-  for (var key in routes) {
-    routeProps = routes[key].match(path, qs)
-    if (routeProps) {
-      route = key
-      break;
-    }
-  }
-
-  browserState = {
-    ...browserState,
-    ...routeProps,
-    route: route
-  }
-  addRemoteProps(browserState).then(
-    (props) => {
-      browserState = props
-      // Log our new browserState
-      console.log(browserState)
-      // Render our components using our remote data
-      ReactDOM.render(<Child {...browserState} />, document.getElementById('root'))
-    }, (res) => {
-      console.error("Error while fetching remote data", res)
-      ReactDOM.render(<ErrorPage message={"Shit happened"} code={res.http_code} />, document.getElementById('root'))
-    })
-}
-
 var Layout = createReactClass({
+  modal(spec) {
+    this.setState({
+      modal: {
+        ...spec, callback: (res) => {
+          this.setState({ modal: null }, () => {
+            if (spec.callback) spec.callback(res)
+          })
+        }
+      }
+    })
+  },
+  loader(spec) {
+    this.setState({
+      loader: true,
+    });
+    return new Promise((resolve, reject) => {
+      spec.then(() => {
+        this.setState({ loader: false });
+      });
+    });
+  },
+  getInitialState() {
+    return { modal: null, loader: false };
+  },
   render() {
+    let modal_component = {
+      'delete': (props) => <DeleteModal {...props} />
+    }[this.state.modal && this.state.modal.type];
+    modal_component = modal_component && modal_component(this.state.modal)
+    var props = {
+      ...this.props, modal: this.modal, loader: this.loader
+    }
+
     return <JSXZ in="orders" sel=".layout">
       <Z sel=".layout-container">
-        <this.props.Child {...this.props} />
+        <this.props.Child {...props} />
+      </Z>
+      <Z sel=".modal-wrapper" className={cn(classNameZ, { 'hidden': !modal_component })}>
+        {modal_component}
+      </Z>
+      <Z
+        sel=".loader-wrapper"
+        className={cn(classNameZ, { hidden: !this.state.loader })}
+      >
+        <Loader />
       </Z>
     </JSXZ>
   }
 })
+
+var DeleteModal = createReactClass({
+  render() {
+    const { callback, title, message } = this.props
+    return (
+      <JSXZ in="confirmation" sel=".modal-content">
+        <Z sel=".modal-title">{title}</Z>
+        <Z sel=".modal-text">{message}</Z>
+        <Z sel=".modal-cancel" onClick={() => callback(false)}>
+          <ChildrenZ />
+        </Z>
+        <Z sel=".modal-submit" onClick={() => callback(true)}>
+          <ChildrenZ />
+        </Z>
+      </JSXZ>)
+  }
+})
+
+const Loader = createReactClass({
+  render() {
+    return <JSXZ in="loader" sel=".loader-content" />;
+  },
+});
 
 var Header = createReactClass({
   render() {
@@ -164,20 +197,45 @@ var Orders = createReactClass({
     remoteProps: [remoteProps.orders]
   },
   render() {
-    const orders = this.props.orders?.value || { items: [] };
-
+    const orders = this.props.orders?.value?.items || [];
     return <JSXZ in="orders" sel=".orders">
-      <Z sel=".tab-header"><ChildrenZ /></Z>
       <Z sel=".tab-body">
-        {orders.items.map(item => {
+        {orders.map(item => {
           const order = item.value
           return (
-            <JSXZ key={order.remoteid} in="orders" sel=".tab-line">
+            <JSXZ in="orders" sel=".tab-line" key={order.remoteid}>
               <Z sel=".col-1">{order.remoteid}</Z>
               <Z sel=".col-2">{order.custom?.customer?.full_name}</Z>
               <Z sel=".col-3">{formatAddress(order.custom?.billing_address)}</Z>
               <Z sel=".col-4">{order.custom?.items.length}</Z>
-              <Z sel=".col-5"><a href={`/order/${order.id}`} className="w-inline-block"><ChildrenZ /></a></Z>
+              <Z
+                sel=".col-5"
+                onClick={() => {
+                  goTo("order", order.id, null);
+                }}
+                >
+                <ChildrenZ />
+              </Z>
+              <Z sel=".col-7" onClick={() => this.props.modal({
+                type: 'delete',
+                title: 'Order deletion',
+                message: `Are you sure you want to delete this ?`,
+                callback: (value) => {
+                  if (value) {
+                    const url = `/api/order/${order.id}`;
+                    this.props.loader(
+                      HTTP.delete(url)
+                      .then((res) => {
+                        console.log(res);
+                        delete browserState.orders;
+                        goTo("orders", null, null);
+                      })
+                    );
+                  }
+                }
+              })}>
+                <ChildrenZ />
+              </Z>
             </JSXZ>)
         })}
       </Z>
@@ -196,30 +254,30 @@ var Order = createReactClass({
   },
   render() {
     const order = this.props.order.value
-    return <JSXZ in="details" sel=".order">
+    return <JSXZ in="details" sel=".container">
       <Z sel=".order-details">
         <JSXZ in="details" sel=".customer-details-label" />
         <JSXZ in="details" sel=".customer-details-value">
-          <Z sel=".customer-name-details-value">{order.custom?.customer?.full_name}</Z>
+          <Z sel=".client-details-value">{order.custom?.customer?.full_name}</Z>
           <Z sel=".address-details-value">{formatAddress(order.custom?.billing_address)}</Z>
-          <Z sel=".customer-number-details-value">{order.remoteid}</Z>
+          <Z sel=".command-number-value">{order.remoteid}</Z>
         </JSXZ>
       </Z>
       <Z sel=".tab-details-body">
-        {order.custom.items.map(item => {
-          return (
-            <JSXZ key={item.item_id} in="details" sel=".tab-details-line">
-              <Z sel=".col-1">{item.product_title}</Z>
-              <Z sel=".col-2">{item.quantity_to_fetch}</Z>
-              <Z sel=".col-3">{item.unit_price}</Z>
-              <Z sel=".col-4">{item.price}</Z>
-            </JSXZ>)
-        })}
+        {order.custom.items.map(item => (
+          <JSXZ in="details" sel=".tab-details-line" key={item.item_id}>
+            <Z sel=".col-1">{item.product_title}</Z>
+            <Z sel=".col-2">{item.quantity_to_fetch}</Z>
+            <Z sel=".col-3">{item.unit_price}</Z>
+            <Z sel=".col-4">{item.unit_price * item.quantity_to_fetch}</Z>
+          </JSXZ>)
+        )}
       </Z>
-      <Z sel=".link">
-        <a onClick={() => this.props.goTo("orders")} className="link">Go back</a>
+      <Z sel=".b-button" onClick={() => {
+        goTo("orders", null, null);
+      }}>
+        <ChildrenZ />
       </Z>
-
     </JSXZ>
   }
 })
@@ -247,14 +305,14 @@ function addRemoteProps(props) {
       .filter((specs) => !props[specs.prop] || props[specs.prop].url != specs.url) // get rid of remoteProps already resolved with the url
     if (remoteProps.length == 0)
       return resolve(props)
-    // All remoteProps can be queried in parallel. This is just the function definition, see its use below.
-    const promise_mapper = (spec) => {
-      // we want to keep the url in the value resolved by the promise here : spec = {url: '/api/orders', value: ORDERS, prop: 'orders'}
-      return HTTP.get(spec.url).then((res) => { spec.value = res; return spec })
+    const promise_mapper = async (spec) => {
+      const res = await HTTP.get(spec.url)
+      spec.value = res
+      return spec
     }
 
+
     const reducer = (acc, spec) => {
-      // spec = url: '/api/orders', value: ORDERS, prop: 'user'}
       acc[spec.prop] = { url: spec.url, value: spec.value }
       return acc
     }
@@ -263,12 +321,46 @@ function addRemoteProps(props) {
     return Promise.all(promise_array)
       .then(xs => xs.reduce(reducer, props), reject)
       .then((p) => {
-        // recursively call remote props, because props computed from
-        // previous queries can give the missing data/props necessary
-        // to define another query
         return addRemoteProps(p).then(resolve, reject)
       }, reject)
   })
+}
+
+function onPathChange() {
+  var path = location.pathname
+  var qs = Qs.parse(location.search.slice(1))
+  var cookies = Cookie.parse(document.cookie)
+
+  browserState = {
+    ...browserState,
+    path: path,
+    qs: qs,
+    cookie: cookies
+  }
+
+  let route
+  let routeProps
+
+  for (var key in routes) {
+    routeProps = routes[key].match(path, qs)
+    if (routeProps) {
+      route = key
+      break;
+    }
+  }
+
+  browserState = {
+    ...browserState,
+    ...routeProps,
+    route
+  }
+  addRemoteProps(browserState).then(
+    (props) => {
+      browserState = props
+      ReactDOM.render(<Child {...browserState} />, document.getElementById('root'))
+    }, (res) => {
+      ReactDOM.render(<ErrorPage message={"Shit happened"} code={res.http_code} />, document.getElementById('root'))
+    })
 }
 
 window.addEventListener('popstate', onPathChange);
