@@ -1,17 +1,58 @@
-require('!!file-loader?name=[name].[ext]!./index.html')
+require('!!file-loader?name=[name].[ext]!../index.html')
 /* required library for our React app */
 var ReactDOM = require('react-dom')
 var React = require("react")
 var createReactClass = require('create-react-class')
 var Qs = require('qs')
 var Cookie = require('cookie')
+var localhost = require('reaxt/config').localhost
 var XMLHttpRequest = require("xhr2")
 
 /* required css for our application */
-require('./webflow/css/orders.css');
-require('./webflow/css/order.css');
-require('./webflow/css/loader.css');
-require('./webflow/css/modal.css');
+require('../webflow/css/orders.css');
+require('../webflow/css/order.css');
+require('../webflow/css/loader.css');
+require('../webflow/css/modal.css');
+
+var Link = createReactClass({
+  statics: {
+    renderFunc: null, //render function to use (differently set depending if we are server sided or client sided)
+    GoTo(route, params, query) {// function used to change the path of our browser
+      var path = routes[route].path(params)
+      var qs = Qs.stringify(query)
+      var url = path + (qs == '' ? '' : '?' + qs)
+      history.pushState({}, "", url)
+      Link.onPathChange()
+    },
+    onPathChange() { //Updated onPathChange
+      var path = location.pathname
+      var qs = Qs.parse(location.search.slice(1))
+      var cookies = Cookie.parse(document.cookie)
+      inferPropsChange(path, qs, cookies).then( //inferPropsChange download the new props if the url query changed as done previously
+        () => {
+          Link.renderFunc(<Child {...browserState} />) //if we are on server side we render 
+        }, ({ http_code }) => {
+          Link.renderFunc(<ErrorPage message={"Not Found"} code={http_code} />, http_code) //idem
+        }
+      )
+    },
+    LinkTo: (route, params, query) => {
+      var qs = Qs.stringify(query)
+      return routes[route].path(params) + ((qs == '') ? '' : ('?' + qs))
+    }
+  },
+  onClick(ev) {
+    ev.preventDefault();
+    Link.GoTo(this.props.to, this.props.params, this.props.query);
+  },
+  render() {//render a <Link> this way transform link into href path which allows on browser without javascript to work perfectly on the website
+    return (
+      <a href={Link.LinkTo(this.props.to, this.props.params, this.props.query)} onClick={this.onClick}>
+        {this.props.children}
+      </a>
+    )
+  }
+})
 
 const HTTP = new (function () {
   this.get = (url) => this.req('GET', url)
@@ -21,6 +62,8 @@ const HTTP = new (function () {
 
   this.req = (method, url, data) => new Promise((resolve, reject) => {
     var req = new XMLHttpRequest()
+    url = (typeof window !== 'undefined') ? url : localhost + url
+
     req.open(method, url)
     req.responseType = "text"
     req.setRequestHeader("accept", "application/json,*/*;0.8")
@@ -359,48 +402,51 @@ function addRemoteProps(props) {
   })
 }
 
-function onPathChange() {
-  var path = location.pathname
-  var qs = Qs.parse(location.search.slice(1))
-  var cookies = Cookie.parse(document.cookie)
-
+function inferPropsChange(path, query, cookies) { // the second part of the onPathChange function have been moved here
   browserState = {
     ...browserState,
-    path: path,
-    qs: qs,
-    cookie: cookies
+    path: path, qs: query,
+    Link: Link,
+    Child: Child
   }
 
-  let route
-  let routeProps
-
+  var route, routeProps
   for (var key in routes) {
-    routeProps = routes[key].match(path, qs)
+    routeProps = routes[key].match(path, query)
     if (routeProps) {
       route = key
-      break;
+      break
     }
   }
 
+  if (!route) {
+    return new Promise((res, reject) => reject({ http_code: 404 }))
+  }
   browserState = {
     ...browserState,
     ...routeProps,
-    route
+    route: route
   }
 
-  if (!route) {
-    ReactDOM.render(<ErrorPage message={"Not Found"} code={404} />, document.getElementById('root'))
-    return;
-  }
-
-  addRemoteProps(browserState).then(
+  return addRemoteProps(browserState).then(
     (props) => {
       browserState = props
-      ReactDOM.render(<Child {...browserState} />, document.getElementById('root'))
-    }, (res) => {
-      ReactDOM.render(<ErrorPage message={"Shit happened"} code={res.http_code} />, document.getElementById('root'))
     })
 }
 
-window.addEventListener('popstate', onPathChange);
-onPathChange();
+export default {
+  reaxt_server_render(params, render) {
+    inferPropsChange(params.path, params.query, params.cookies)
+      .then(() => {
+        render(<Child {...browserState} />)
+      }, (err) => {
+        render(<ErrorPage message={"Not Found :" + err.url} code={err.http_code} />, err.http_code)
+      })
+  },
+  reaxt_client_render(initialProps, render) {
+    browserState = initialProps
+    Link.renderFunc = render
+    window.addEventListener("popstate", () => { Link.onPathChange() })
+    Link.onPathChange()
+  }
+}
