@@ -22,11 +22,17 @@ limitations under the License.
       <field name="creation_date_int"         type="int"  indexed="true" stored="true" multiValued="false"/>
       <field name="creation_date_index"       type="date"   indexed="true" stored="true" multiValued="false"/>
       <field name="custom.shipping_method"    type="string" indexed="true" stored="true" multiValued="true"/>
-      <field name="custom.customer.last_name" type="string" indexed="true" stored="true" multiValued="true"/>
-      <field name="custom.customer.full_name" type="string" indexed="true" stored="true" multiValued="true"/>
-      <field name="custom.customer.email"     type="string" indexed="true" stored="true" multiValued="true"/>
-      <field name="id"                        type="string" indexed="true" stored="true" multiValued="true"/>
-      <field name="type"                        type="string" indexed="true" stored="true" multiValued="true"/>
+      <field name="custom.customer.full_name" type="string" indexed="true" stored="true" multiValued="false"/>
+      <field name="custom.customer.email"     type="string" indexed="true" stored="true" multiValued="false"/>
+      <field name="id"                        type="string" indexed="true" stored="true" multiValued="false"/>
+      <field name="type"                      type="string" indexed="true" stored="true" multiValued="false"/>
+      <field name="remoteid"                  type="string" indexed="true" stored="true" multiValued="false"/>
+      <field name="status.state" type="string" indexed="true" stored="true" multiValued="false" />
+      <field name="custom.items.quantity_to_fetch" type="int" indexed="true" stored="true" multiValued="true" />
+      <field name="custom.magento.payment.method" type="string" indexed="true" stored="true" multiValued="false" />
+      <field name="custom.billing_address.city" type="string" indexed="true" stored="true" multiValued="false" />
+      <field name="custom.billing_address.street" type="string" indexed="true" stored="true" multiValued="true" />
+      <field name="custom.billing_address.postcode" type="string" indexed="true" stored="true" multiValued="false" />
 
   <dynamicField name="*" type="ignored" />
 

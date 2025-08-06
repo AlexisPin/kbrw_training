@@ -1,5 +1,8 @@
 defmodule Riak do
   def url, do: "https://kbrw-sb-tutoex-riak-gateway.kbrw.fr"
+  def orders_bucket, do: "alexispin_orders"
+  def orders_schema_name, do: "alexispin_orders_schema"
+  def orders_index_name, do: "alexispin_orders_index"
 
   def auth_header do
     username = "sophomore"
@@ -53,7 +56,7 @@ defmodule Riak do
       )
 
     case code do
-      code when code in [200, 300, 304] -> {:ok, {code, body}}
+      code when code in [200, 300, 304] -> {:ok, {code, Poison.decode!(body)}}
       code -> {:error, {code, body}}
     end
   end
@@ -78,7 +81,7 @@ defmodule Riak do
 
     {:ok, {{_, code, _message}, _headers, body}} =
       :httpc.request(
-        :post,
+        :put,
         {~c"#{Riak.url()}/search/schema/#{schema_name}", Riak.auth_header(), ~c"application/xml",
          schema},
         [],
@@ -140,14 +143,22 @@ defmodule Riak do
 
   def empty_bucket(bucket) do
     keys = Poison.decode!(elem(bucket_keys(bucket), 1))["keys"]
-    Enum.each(keys, fn key ->
-      delete(bucket, key)
-    end)
+
+    Task.async_stream(
+      keys,
+      fn key ->
+        delete(bucket, key)
+      end,
+      max_concurrency: 10
+    )
+    |> Stream.run()
+
     :ok
   end
 
   def delete_bucket(bucket) do
     empty_bucket(bucket)
+
     {:ok, {{_, code, _message}, _headers, body}} =
       :httpc.request(
         :delete,
@@ -160,5 +171,46 @@ defmodule Riak do
       204 -> {:ok, {code, body}}
       code -> {:error, {code, body}}
     end
+  end
+
+  def search(index, query, page \\ 0, rows \\ 30, sort \\ "creation_date_index") do
+    {:ok, {{_, code, _message}, _headers, body}} =
+      :httpc.request(
+        :get,
+        {~c"#{Riak.url()}/search/query/#{index}/?wt=json&q=#{query}&start=#{page}&rows=#{rows}&sort=#{sort}%20ASC",
+         Riak.auth_header()},
+        [],
+        []
+      )
+
+    case code do
+      200 -> {:ok, {code, Poison.decode!(body)["response"]}}
+      code -> {:error, {code, body}}
+    end
+  end
+
+  def escape(string) do
+    string
+    |> String.replace(~r/[+&|!(){}[\]^"~*?:\/]/, fn
+      "+" -> "\\+"
+      "&" -> "\\&"
+      "|" -> "\\|"
+      "!" -> "\\!"
+      "(" -> "\\("
+      ")" -> "\\)"
+      "{" -> "\\{"
+      "}" -> "\\}"
+      "[" -> "\\["
+      "]" -> "\\]"
+      "^" -> "\\^"
+      "\"" -> "\\\""
+      "~" -> "\\~"
+      "*" -> "\\*"
+      "?" -> "\\?"
+      ":" -> "\\:"
+      "/" -> "\\/"
+      "\\" -> "%5C"
+      other -> other
+    end)
   end
 end

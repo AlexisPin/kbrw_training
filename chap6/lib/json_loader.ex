@@ -9,6 +9,22 @@ defmodule JsonLoader do
     end
   end
 
+  def load_to_riak(json_file) do
+    with {:ok, json_data} <- read_file(json_file),
+         {:ok, decoded_data} <- decode_json(json_data) do
+      Stream.map(decoded_data, fn record ->
+        {record["id"], Poison.encode!(record)}
+      end)
+      |> Task.async_stream(fn {id, json} ->
+        Riak.put(Riak.orders_bucket, id, json)
+      end, max_concurrency: 10)
+      |> Stream.run()
+      {:ok, :loaded}
+    else
+      {:error, reason} -> {:error, reason}
+    end
+end
+
   defp read_file(json_file) do
     case File.read(json_file) do
       {:ok, content} -> {:ok, content}

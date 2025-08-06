@@ -8,24 +8,18 @@ defmodule Server.Database do
     GenServer.start_link(__MODULE__, server, opts)
   end
 
-  def create(server, name, value \\ 0) do
-    GenServer.call(server, {:create, name, value})
-  end
+  def create(server \\ __MODULE__, name, value \\ 0), do: GenServer.call(server, {:create, name, value})
 
-  def lookup(server, name) do
+  def lookup(server \\ __MODULE__, name) do
     case :ets.lookup(server, name) do
       [{^name, value}] -> {:ok, value}
       [] -> :error
     end
   end
 
-  def delete(server, key) do
-    GenServer.call(server, {:delete, key})
-  end
+  def delete(server \\ __MODULE__, key), do: GenServer.call(server, {:delete, key})
 
-  def update(server, key, value) do
-    GenServer.call(server, {:update, key, value})
-  end
+  def update(server \\ __MODULE__, key, value), do: GenServer.call(server, {:update, key, value})
 
   def search(database, criteria) when is_atom(database) and is_list(criteria) do
     all_records = :ets.tab2list(database)

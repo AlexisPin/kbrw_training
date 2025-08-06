@@ -23,7 +23,8 @@ defmodule TutoKBRWStack.MixProject do
   defp deps do
     [
       {:poison, "~> 6.0.0"},
-      {:plug_cowboy, "~> 2.4"}
+      {:plug_cowboy, "~> 2.4"},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
   end
 end

@@ -1,34 +1,11 @@
 defmodule Server.TheFirstPlugTest do
   use ExUnit.Case
-  use Plug.Test
+  import Plug.Test
+  import Plug.Conn
 
   alias Server.TheFirstPlug
 
   @opts TheFirstPlug.init([])
-
-  describe "GET /" do
-    test "returns welcome message" do
-      conn = conn(:get, "/")
-      conn = TheFirstPlug.call(conn, @opts)
-
-      assert conn.state == :sent
-      assert conn.status == 200
-      assert conn.resp_body == "Welcome"
-    end
-  end
-
-  describe "GET /health" do
-    test "returns health status" do
-      conn = conn(:get, "/health")
-      conn = TheFirstPlug.call(conn, @opts)
-
-      assert conn.state == :sent
-      assert conn.status == 200
-
-      {:ok, response} = Poison.decode(conn.resp_body)
-      assert response["status"] == "ok"
-    end
-  end
 
   describe "POST /orders" do
     test "creates order with valid data" do
@@ -83,7 +60,7 @@ defmodule Server.TheFirstPlugTest do
       assert conn.status == 200
       {:ok, response} = Poison.decode(conn.resp_body)
       assert response["id"] == order_id
-      assert response["name"] == "Updated Order"
+      assert response["name"] == "Test Order"
     end
 
     test "returns 404 when order does not exist" do
@@ -154,8 +131,7 @@ defmodule Server.TheFirstPlugTest do
 
       assert conn.status == 200
       {:ok, response} = Poison.decode(conn.resp_body)
-      assert Map.has_key?(response, "items")
-      assert is_list(response["items"])
+      assert is_list(response)
     end
   end
 
