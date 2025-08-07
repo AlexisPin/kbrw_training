@@ -21,8 +21,7 @@ const Orders = createReactClass({
     this.props.loader(
       this.setState({ page },
         () => {
-          delete browserState.orders;
-          Link.GoTo("orders", null, { page: this.state.page, rows: this.state.rows, sort: this.state.sort });
+          Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
         }
       )
     );
@@ -31,27 +30,26 @@ const Orders = createReactClass({
     if (!quantityArray || !quantityArray.length) return 0;
     return quantityArray.reduce((acc, quantity) => acc + quantity, 0);
   },
-  // onSearch(ev) {
-  //   ev.preventDefault();
-
-  //   const searchValue = ev.target.search.value;
-  //   this.props.loader(
-  //     HTTP.get(`/api/orders?page=${this.state.page}&rows=${this.state.rows}&sort=${this.state.sort}&${searchValue}`)
-  //       .then((res) => {
-  //         this.setState({ orders: res })
-  //       })
-  //   );
-  // },
+  onSearch(ev) {
+    ev.preventDefault();
+    const formData = new FormData(ev.target)
+    const searchValue = formData.get('search')
+    const [key, value] = searchValue.split(':')
+    Link.GoTo("orders", null, { page: this.state.page, [key]: value });
+  },
   render() {
-    console.error(this.paginate)
+    const orders = this.props.orders?.value || [];
     return <JSXZ in="orders" sel=".orders">
+      <Z sel=".form" onSubmit={(ev) => this.onSearch(ev)}>
+        <ChildrenZ />
+      </Z>
       <Z sel=".tab-body">
-        {this.props.orders.value.map(order => {
+        {orders.map(order => {
           return (
             <JSXZ in="orders" sel=".tab-line" key={order.remoteid}>
               <Z sel=".col-1">{order.remoteid}</Z>
               <Z sel=".col-2">{order["custom.customer.full_name"]}</Z>
-              <Z sel=".col-3">{order["custom.billing_address.street"][0]} {order["custom.billing_address.postcode"]} {order["custom.billing_address.city"]}</Z>
+              <Z sel=".col-3">{order["custom.billing_address.street"].join(', ')} {order["custom.billing_address.postcode"]} {order["custom.billing_address.city"]}</Z>
               <Z sel=".col-4">{this.quantities(order["custom.items.quantity_to_fetch"])}</Z>
 
               <Z
@@ -75,8 +73,8 @@ const Orders = createReactClass({
                     this.props.loader(
                       HTTP.delete(url)
                         .then((res) => {
-                          delete browserState.orders;
-                          Link.GoTo("orders", null, { page: this.state.page });
+                          delete browserState.orders
+                          Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
                         })
                     );
                   }
@@ -108,6 +106,7 @@ const Orders = createReactClass({
       <Z
         sel=".next-page"
         tag="button"
+        className={cn({ 'hidden': orders.length < this.state.rows })}
         onClick={() => this.paginate(this.state.page + 1)}
       >
         {this.state.page + 2}
