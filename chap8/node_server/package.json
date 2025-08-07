@@ -1,0 +1,14 @@
+{
+  "name": "node_server",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "hello.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@kbrw/node_erlastic": "^0.1.2"
+  }
+}
