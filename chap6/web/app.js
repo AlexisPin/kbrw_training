@@ -196,20 +196,31 @@ const Orders = createReactClass({
   },
   getInitialState() {
     return {
-      page: 0
+      page: 0,
+      rows: 30,
+      sort: 'creation_date_index',
     }
   },
   paginate(page) {
     this.setState({
       page: Math.max(0, page)
     }, () => {
-      delete browserState.orders;
-      goTo("orders", null, { page: this.state.page });
+      goTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
     });
+  },
+  onSearch(ev) {
+    ev.preventDefault();
+    const formData = new FormData(ev.target)
+    const searchValue = formData.get('search')
+    const [key, value] = searchValue.split(':')
+    goTo("orders", null, { page: this.state.page, [key]: value });
   },
   render() {
     const orders = this.props.orders?.value || [];
     return <JSXZ in="orders" sel=".orders">
+      <Z sel=".form" onSubmit={(ev) => this.onSearch(ev)}>
+        <ChildrenZ />
+      </Z>
       <Z sel=".tab-body">
         {orders.map(order => {
           return (
@@ -238,9 +249,9 @@ const Orders = createReactClass({
                     const url = `/api/order/${order.id}`;
                     this.props.loader(
                       HTTP.delete(url)
-                        .then((res) => {
-                          delete browserState.orders;
-                          goTo("orders", null, { page: this.state.page });
+                        .then(() => {
+                          delete browserState.orders
+                          goTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
                         })
                     );
                   }
@@ -272,6 +283,7 @@ const Orders = createReactClass({
       <Z
         sel=".next-page"
         tag="button"
+        className={cn({ 'hidden': orders.length < this.state.rows })}
         onClick={() => this.paginate(this.state.page + 1)}
       >
         {this.state.page + 2}
@@ -340,6 +352,8 @@ function addRemoteProps(props) {
       .filter((specs) => !props[specs.prop] || props[specs.prop].url != specs.url) // get rid of remoteProps already resolved with the url
     if (remoteProps.length == 0)
       return resolve(props)
+    console.log(remoteProps);
+
     const promise_mapper = async (spec) => {
       const res = await HTTP.get(spec.url)
       spec.value = res
