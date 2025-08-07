@@ -3,6 +3,8 @@ const Header = require("./component/header.js")
 const Orders = require("./component/orders.js")
 const Order = require("./component/order.js")
 
+const HTTP = require("./http.js").default
+
 const routes = {
   "orders": {
     path: (params) => {
@@ -22,6 +24,5 @@ const routes = {
     }
   }
 }
-
 
 module.exports = routes;

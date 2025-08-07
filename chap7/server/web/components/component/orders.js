@@ -1,10 +1,8 @@
 var cn = require('../utils').default
 var createReactClass = require('create-react-class')
-var remoteProps = require('../props.js')
+var remoteProps = require('../props.js').default
 var HTTP = require('../http.js').default
 var React = require("react")
-var ReactDOM = require('react-dom')
-var Link = require('./link.js')
 
 const Orders = createReactClass({
   statics: {
@@ -12,18 +10,19 @@ const Orders = createReactClass({
   },
   getInitialState() {
     return {
-      page: 0,
-      rows: 30,
-      sort: 'creation_date_index',
+      page: this.props.qs.page ? parseInt(this.props.qs.page) / 30 : 0,
+      rows: this.props.qs.rows ? parseInt(this.props.qs.rows) : 30,
+      sort: this.props.qs.sort || 'creation_date_index'
     }
   },
   paginate(page) {
     this.props.loader(
-      this.setState({ page },
-        () => {
-          Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
-        }
-      )
+      new Promise((resolve) => {
+        this.setState({ page }, () => {
+          this.props.Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
+          resolve();
+        });
+      })
     );
   },
   quantities(quantityArray) {
@@ -35,7 +34,7 @@ const Orders = createReactClass({
     const formData = new FormData(ev.target)
     const searchValue = formData.get('search')
     const [key, value] = searchValue.split(':')
-    Link.GoTo("orders", null, { page: this.state.page, [key]: value });
+    this.props.Link.GoTo("orders", null, { page: this.state.page, [key]: value });
   },
   render() {
     const orders = this.props.orders?.value || [];
@@ -54,9 +53,9 @@ const Orders = createReactClass({
 
               <Z
                 sel=".col-5">
-                <Link to="order" params={order.id} query={{}}>
+                <this.props.Link to="order" params={order.id} query={{ page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort }}>
                   <ChildrenZ />
-                </Link>
+                </this.props.Link>
               </Z>
 
               <Z tag="button" sel=".pay-button">Pay <ChildrenZ /></Z>
@@ -72,9 +71,8 @@ const Orders = createReactClass({
                     const url = `/api/order/${order.id}`;
                     this.props.loader(
                       HTTP.delete(url)
-                        .then((res) => {
-                          delete browserState.orders
-                          Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
+                        .then(() => {
+                          this.props.Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
                         })
                     );
                   }
