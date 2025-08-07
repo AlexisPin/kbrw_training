@@ -8,7 +8,8 @@ require('../webflow/css/order.css');
 require('../webflow/css/loader.css');
 require('../webflow/css/modal.css');
 
-var { inferPropsChange, getBrowserState, setBrowserState, Link } = require("./component/link.js")
+var { inferPropsChange, Link } = require("./component/link.js")
+var { getBrowserState, setBrowserState } = require("./state.js")
 
 var Child = require("./component/child.js")
 var ErrorPage = require("./component/error.js")

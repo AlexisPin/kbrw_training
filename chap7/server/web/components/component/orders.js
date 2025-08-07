@@ -3,6 +3,7 @@ var createReactClass = require('create-react-class')
 var remoteProps = require('../props.js').default
 var HTTP = require('../http.js').default
 var React = require("react")
+var { getBrowserState, setBrowserState } = require("../state.js")
 
 const Orders = createReactClass({
   statics: {
@@ -72,6 +73,9 @@ const Orders = createReactClass({
                     this.props.loader(
                       HTTP.delete(url)
                         .then(() => {
+                          let browserState = getBrowserState();
+                          delete browserState.orders;
+                          setBrowserState(browserState);
                           this.props.Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
                         })
                     );

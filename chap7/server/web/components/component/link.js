@@ -6,6 +6,7 @@ var routes = require("../routes.js")
 var Child = require("./child.js")
 var ErrorPage = require("./error.js")
 var HTTP = require('../http.js').default
+var { getBrowserState, setBrowserState } = require("../state.js")
 
 var Link = createReactClass({
   statics: {
@@ -23,6 +24,7 @@ var Link = createReactClass({
       var cookies = Cookie.parse(document.cookie)
       inferPropsChange(path, qs, cookies).then( //inferPropsChange download the new props if the url query changed as done previously
         () => {
+          const browserState = getBrowserState();
           Link.renderFunc(<Child {...browserState} />) //if we are on server side we render 
         }, ({ http_code }) => {
           Link.renderFunc(<ErrorPage message={"Not Found"} code={http_code} />, http_code) //idem
@@ -47,13 +49,6 @@ var Link = createReactClass({
   }
 })
 
-let browserState = {}
-function getBrowserState() {
-  return browserState
-}
-function setBrowserState(state) {
-  browserState = state
-}
 
 function addRemoteProps(props) {
   return new Promise((resolve, reject) => {
@@ -67,6 +62,7 @@ function addRemoteProps(props) {
       .map((spec_fun) => spec_fun(props)) // [{url: '/api/orders', prop: 'orders'}]
       .filter((specs) => specs) // get rid of undefined from remoteProps that don't match their dependencies
       .filter((specs) => !props[specs.prop] || props[specs.prop].url != specs.url) // get rid of remoteProps already resolved with the url
+
     if (remoteProps.length == 0)
       return resolve(props)
 
@@ -90,6 +86,8 @@ function addRemoteProps(props) {
 }
 
 function inferPropsChange(path, query, cookies) { // the second part of the onPathChange function have been moved here
+  let browserState = getBrowserState()
+
   browserState = {
     ...browserState,
     path: path, qs: query,
@@ -105,7 +103,7 @@ function inferPropsChange(path, query, cookies) { // the second part of the onPa
       break
     }
   }
-
+  setBrowserState(browserState)
   if (!route) {
     return new Promise((res, reject) => reject({ http_code: 404 }))
   }
@@ -117,13 +115,11 @@ function inferPropsChange(path, query, cookies) { // the second part of the onPa
 
   return addRemoteProps(browserState).then(
     (props) => {
-      browserState = props
+      setBrowserState(props)
     })
 }
 
 module.exports = {
-  getBrowserState,
-  setBrowserState,
   inferPropsChange,
   Link
 }
