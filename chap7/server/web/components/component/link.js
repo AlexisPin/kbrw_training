@@ -3,11 +3,23 @@ const Cookie = require('cookie');
 var createReactClass = require('create-react-class')
 var React = require("react")
 
-const Link = createReactClass({
+var Link = createReactClass({
   statics: {
+    routes : {
+      "orders": {
+        path: (params) => {
+          return "/";
+        }
+      },
+      "order": {
+        path: (params) => {
+          return "/order/" + params;
+        },
+      }
+    },
     renderFunc: null, //render function to use (differently set depending if we are server sided or client sided)
-    GoTo(route, params, query) {// function used to change the path of our browser
-      var path = routes[route].path(params)
+    GoTo(route, params, query) {// function used to change the path of our browser      
+      var path = Link.routes[route].path(params)
       var qs = Qs.stringify(query)
       var url = path + (qs == '' ? '' : '?' + qs)
       history.pushState({}, "", url)
@@ -27,8 +39,8 @@ const Link = createReactClass({
     },
     LinkTo: (route, params, query) => {
       var qs = Qs.stringify(query)
-      return routes[route].path(params) + ((qs == '') ? '' : ('?' + qs))
-    }
+      return Link.routes[route].path(params) + ((qs == '') ? '' : ('?' + qs))
+    },
   },
   onClick(ev) {
     ev.preventDefault();

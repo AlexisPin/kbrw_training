@@ -86,7 +86,7 @@ async function inferPropsChange(path, query, cookies) { // the second part of th
   }
 
   if (!route) {
-    return new Promise((res, reject) => reject({ http_code: 408 }))
+    return new Promise((res, reject) => reject({ http_code: 404 }))
   }
   browserState = {
     ...browserState,
@@ -104,7 +104,7 @@ export default {
       .then(() => {
         render(<Child {...browserState} />)
       }, (err) => {
-        render(<ErrorPage message={"Not Found :" + err} code={err.http_code} />, err.http_code)
+        render(<ErrorPage message={"Not Found :" + err.url} code={err.http_code} />, err.http_code)
       })
   },
   reaxt_client_render(initialProps, render) {

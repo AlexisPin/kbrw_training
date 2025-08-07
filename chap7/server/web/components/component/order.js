@@ -13,10 +13,11 @@ const Order = createReactClass({
         <JSXZ in="details" sel=".customer-details-label" />
         <JSXZ in="details" sel=".customer-details-value">
           <Z sel=".client-details-value">{order.custom?.customer?.full_name}</Z>
-          <Z sel=".address-details-value">{order.custom?.billing_address}</Z>
+          <Z sel=".address-details-value">{order.custom?.billing_address?.street[0]} {order.custom?.billing_address?.postcode} {order.custom?.billing_address?.city}</Z>
           <Z sel=".command-number-value">{order.remoteid}</Z>
         </JSXZ>
       </Z>
+
       <Z sel=".tab-details-body">
         {order.custom.items.map(item => (
           <JSXZ in="details" sel=".tab-details-line" key={item.item_id}>
