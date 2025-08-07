@@ -9,6 +9,7 @@ defmodule Server.ServSupervisor do
   def init(:ok) do
     children = [
       {Server.Database, name: Server.Database},
+      {OrderFsmSupervisor, name: OrderFsmSupervisor},
       {Plug.Cowboy, scheme: :http, plug: Server.MainRouter, options: [port: 4001]}
     ]
 

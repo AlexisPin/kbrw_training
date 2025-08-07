@@ -1,9 +1,9 @@
-var Qs = require('qs')
+import { stringify } from 'qs'
 
 const remoteProps = {
   orders: (props) => {
     var qs = { ...props.qs }
-    var query = Qs.stringify(qs)
+    var query = stringify(qs)
     return {
       url: "/api/orders" + (query == '' ? '' : '?' + query),
       prop: "orders"
@@ -17,5 +17,4 @@ const remoteProps = {
   }
 }
 
-
-module.exports = remoteProps
+export default remoteProps

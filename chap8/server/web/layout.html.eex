@@ -11,6 +11,6 @@
 <body>
   <div id="content"><%= render.html %></div>
   <script src="/public/<%= WebPack.file_of(:main) %>"></script>
-  <script><%= render.js_render %>("content")</script>
+  <script><%= render.js_render %>.then((render) => render("content"))</script>
 </body>
 </html>

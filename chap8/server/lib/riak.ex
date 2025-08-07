@@ -18,7 +18,7 @@ defmodule Riak do
     {:ok, body}
   end
 
-  def bucket_keys(bucket) do
+  def get_keys(bucket) do
     {:ok, {{_, 200, _message}, _headers, body}} =
       :httpc.request(
         :get,
@@ -142,7 +142,7 @@ defmodule Riak do
   end
 
   def empty_bucket(bucket) do
-    keys = Poison.decode!(elem(bucket_keys(bucket), 1))["keys"]
+    keys = Poison.decode!(elem(get_keys(bucket), 1))["keys"]
 
     Task.async_stream(
       keys,
@@ -214,11 +214,31 @@ defmodule Riak do
     end)
   end
 
+  #   Before anything, we need to assure that all our values in the database have their status set to our FSM default state. We want that all the commands on Riak respect the following property:
+
+  # command.status.state == 'init'
   def initialize_commands(bucket) do
-    Riak.get_keys(bucket)
-    |> Enum.map(fn key ->
-      nil
-      # update the json here
-    end)
+    keys = Poison.decode!(elem(Riak.get_keys(bucket), 1))["keys"]
+    Task.async_stream(
+      keys,
+      fn key ->
+        case Riak.get(bucket, key) do
+          {:ok, {_, order}} ->
+            case order["status"]["state"] do
+              "init" ->
+                :ok
+
+              _ ->
+                order = Map.put(order, "status", %{"state" => "init"})
+                Riak.put(bucket, key, Poison.encode!(order))
+            end
+
+          _ ->
+            {:error, "Failed to get order with key #{key}"}
+        end
+      end,
+      max_concurrency: 10
+    )
+    |> Stream.run()
   end
 end

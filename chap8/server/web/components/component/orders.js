@@ -1,10 +1,9 @@
-var cn = require('../utils.js').default
+var cn = require('../utils').default
 var createReactClass = require('create-react-class')
-var remoteProps = require('../props.js')
+var remoteProps = require('../props.js').default
 var HTTP = require('../http.js').default
 var React = require("react")
-var ReactDOM = require('react-dom')
-var Link = require('./link.js')
+var { getBrowserState, setBrowserState } = require("../state.js")
 
 const Orders = createReactClass({
   statics: {
@@ -12,39 +11,40 @@ const Orders = createReactClass({
   },
   getInitialState() {
     return {
-      page: 0,
-      rows: 30,
-      sort: 'creation_date_index',
+      page: this.props.qs.page ? parseInt(this.props.qs.page) / 30 : 0,
+      rows: this.props.qs.rows ? parseInt(this.props.qs.rows) : 30,
+      sort: this.props.qs.sort || 'creation_date_index'
     }
   },
   paginate(page) {
     this.props.loader(
-      this.setState({ page },
-        () => {
-          Link.GoTo("orders", null, { page: this.state.page, rows: this.state.rows, sort: this.state.sort });
-        }
-      )
+      new Promise((resolve) => {
+        this.setState({ page }, () => {
+          this.props.Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
+          resolve();
+        });
+      })
     );
   },
   quantities(quantityArray) {
     if (!quantityArray || !quantityArray.length) return 0;
     return quantityArray.reduce((acc, quantity) => acc + quantity, 0);
   },
-  // onSearch(ev) {
-  //   ev.preventDefault();
-
-  //   const searchValue = ev.target.search.value;
-  //   this.props.loader(
-  //     HTTP.get(`/api/orders?page=${this.state.page}&rows=${this.state.rows}&sort=${this.state.sort}&${searchValue}`)
-  //       .then((res) => {
-  //         this.setState({ orders: res })
-  //       })
-  //   );
-  // },
+  onSearch(ev) {
+    ev.preventDefault();
+    const formData = new FormData(ev.target)
+    const searchValue = formData.get('search')
+    const [key, value] = searchValue.split(':')
+    this.props.Link.GoTo("orders", null, { page: this.state.page, [key]: value });
+  },
   render() {
+    const orders = this.props.orders?.value || [];
     return <JSXZ in="orders" sel=".orders">
+      <Z sel=".form" onSubmit={(ev) => this.onSearch(ev)}>
+        <ChildrenZ />
+      </Z>
       <Z sel=".tab-body">
-        {this.props.orders.value.map(order => {
+        {orders.map(order => {
           return (
             <JSXZ in="orders" sel=".tab-line" key={order.remoteid}>
               <Z sel=".col-1">{order.remoteid}</Z>
@@ -54,9 +54,9 @@ const Orders = createReactClass({
 
               <Z
                 sel=".col-5">
-                <Link to="order" params={order.id} query={{}}>
+                <this.props.Link to="order" params={order.id} query={{ page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort }}>
                   <ChildrenZ />
-                </Link>
+                </this.props.Link>
               </Z>
 
               <Z tag="button" sel=".pay-button">Pay <ChildrenZ /></Z>
@@ -72,9 +72,11 @@ const Orders = createReactClass({
                     const url = `/api/order/${order.id}`;
                     this.props.loader(
                       HTTP.delete(url)
-                        .then((res) => {
+                        .then(() => {
+                          let browserState = getBrowserState();
                           delete browserState.orders;
-                          Link.GoTo("orders", null, { page: this.state.page });
+                          setBrowserState(browserState);
+                          this.props.Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
                         })
                     );
                   }
@@ -106,6 +108,7 @@ const Orders = createReactClass({
       <Z
         sel=".next-page"
         tag="button"
+        className={cn({ 'hidden': orders.length < this.state.rows })}
         onClick={() => this.paginate(this.state.page + 1)}
       >
         {this.state.page + 2}

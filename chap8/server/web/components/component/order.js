@@ -1,5 +1,5 @@
 var createReactClass = require('create-react-class')
-var remoteProps = require('../props.js')
+var remoteProps = require('../props.js').default
 var React = require("react")
 
 const Order = createReactClass({
@@ -28,8 +28,10 @@ const Order = createReactClass({
           </JSXZ>)
         )}
       </Z>
-      <Z sel=".b-button" onClick={() => goTo("orders", null, null)}>
-        <ChildrenZ />
+      <Z sel=".b-button">
+        <this.props.Link to="orders" params={order.id} query={this.props.qs}>
+          <ChildrenZ />
+        </this.props.Link>
       </Z>
     </JSXZ>
   }
