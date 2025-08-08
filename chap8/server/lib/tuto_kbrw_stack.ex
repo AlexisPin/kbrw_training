@@ -24,15 +24,16 @@ defmodule TutoKBRWStack do
 
     Enum.each(json_files, &JsonLoader.load_to_database(Server.Database, &1))
 
-    # {:ok, _} = Riak.upload_schema(Riak.orders_schema_name, "./schema/order_schema.xml")
-    # {:ok, _} = Riak.create_index(Riak.orders_index_name, Riak.orders_schema_name)
-    # {:ok, _} = Riak.assign_index(Riak.orders_index_name, Riak.orders_bucket)
+    {:ok, _} = Riak.upload_schema(Riak.orders_schema_name(), "./schema/order_schema.xml")
+    {:ok, _} = Riak.create_index(Riak.orders_index_name(), Riak.orders_schema_name())
+    {:ok, _} = Riak.assign_index(Riak.orders_index_name(), Riak.orders_bucket())
 
-    # json_files
-    # |> Enum.each(fn json_file ->
-    #   {:ok, _} = JsonLoader.load_to_riak(json_file)
-    # end)
+    json_files
+    |> Enum.each(fn json_file ->
+      {:ok, _} = JsonLoader.load_to_riak(json_file)
+    end)
 
+    Riak.initialize_commands(Riak.orders_bucket())
     pid
   end
 end

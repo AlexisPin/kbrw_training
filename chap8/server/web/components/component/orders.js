@@ -11,6 +11,7 @@ const Orders = createReactClass({
   },
   getInitialState() {
     return {
+      flashMessage: '',
       page: this.props.qs.page ? parseInt(this.props.qs.page) / 30 : 0,
       rows: this.props.qs.rows ? parseInt(this.props.qs.rows) : 30,
       sort: this.props.qs.sort || 'creation_date_index'
@@ -37,14 +38,47 @@ const Orders = createReactClass({
     const [key, value] = searchValue.split(':')
     this.props.Link.GoTo("orders", null, { page: this.state.page, [key]: value });
   },
+  updateOrderStatus(id, status) {
+    let action = ''
+    if (status === 'not_verified') action = 'verify'
+    else if (status === 'init') action = 'pay'
+    else return
+    const url = `/api/order/${id}/${action}`
+    this.props.loader(
+      HTTP.put(url).then((updatedOrder) => {
+        let browserState = getBrowserState();
+        const newOrdersValue = browserState.orders.value.map(order => {
+          return order.id === updatedOrder.id ? {
+            ...order,
+            "status.state": updatedOrder.status.state
+          } : order
+        }
+        );
+        browserState = {
+          ...browserState,
+          orders: {
+            ...browserState.orders,
+            value: newOrdersValue
+          }
+        }
+        setBrowserState({ ...browserState });
+        this.props.Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
+      }).catch((err) => {
+        this.setState({ flashMessage: err.message.error }, () => {
+          setTimeout(() => this.setState({ flashMessage: '' }), 3000)
+        })
+
+      })
+    )
+  },
   render() {
-    const orders = this.props.orders?.value || [];
     return <JSXZ in="orders" sel=".orders">
       <Z sel=".form" onSubmit={(ev) => this.onSearch(ev)}>
         <ChildrenZ />
       </Z>
+      <Z sel=".orders-container" if={this.state.flashMessage} >{this.state.flashMessage}</Z>
       <Z sel=".tab-body">
-        {orders.map(order => {
+        {(this.props.orders?.value || []).map(order => {
           return (
             <JSXZ in="orders" sel=".tab-line" key={order.remoteid}>
               <Z sel=".col-1">{order.remoteid}</Z>
@@ -59,7 +93,8 @@ const Orders = createReactClass({
                 </this.props.Link>
               </Z>
 
-              <Z tag="button" sel=".pay-button">Pay <ChildrenZ /></Z>
+              <Z tag="button" sel=".pay-button" if={order["status.state"] !== 'finished'} onClick={() => this.updateOrderStatus(order.id, order["status.state"])}>{
+                order["status.state"] === 'init' ? 'Pay' : 'Verify'} <ChildrenZ /></Z>
               <Z sel=".pay-status">State : {order["status.state"] || 'N/A'}</Z>
               <Z sel=".pay-method">Method: {order["custom.magento.payment.method"] || 'N/A'}</Z>
 
@@ -73,8 +108,9 @@ const Orders = createReactClass({
                     this.props.loader(
                       HTTP.delete(url)
                         .then(() => {
-                          let browserState = getBrowserState();
-                          delete browserState.orders;
+                          const browserState = getBrowserState();
+                          delete browserState.orders
+                          console.error(browserState)
                           setBrowserState(browserState);
                           this.props.Link.GoTo("orders", null, { page: this.state.page * this.state.rows, rows: this.state.rows, sort: this.state.sort });
                         })
@@ -108,7 +144,7 @@ const Orders = createReactClass({
       <Z
         sel=".next-page"
         tag="button"
-        className={cn({ 'hidden': orders.length < this.state.rows })}
+        className={cn({ 'hidden': (this.props.orders?.value || []).length < this.state.rows })}
         onClick={() => this.paginate(this.state.page + 1)}
       >
         {this.state.page + 2}

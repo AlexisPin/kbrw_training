@@ -19,7 +19,7 @@ var HTTP = new (function () {
       if (req.status >= 200 && req.status < 300) {
         resolve(req.responseText && JSON.parse(req.responseText))
       } else {
-        reject({ http_code: req.status })
+        reject({ http_code: req.status, message: JSON.parse(req.responseText) })
       }
     }
     req.onerror = (err) => {

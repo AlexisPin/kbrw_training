@@ -59,13 +59,32 @@ defmodule Server.TheFirstPlug do
     end
   end
 
-  delete "/order/:id" do
+  put "/order/:id/pay" do
+    {:ok, pid} = OrderFsmSupervisor.get_or_start_order_fsm(id)
 
+    case OrderFsmTransactor.pay(pid) do
+      :action_unavailable -> resp_with_json(conn, 401, %{error: "Action of paying is unauthorized"})
+      updated_order -> resp_with_json(conn, 200, updated_order)
+    end
+  end
+
+  put "/order/:id/verify" do
+    {:ok, pid} = OrderFsmSupervisor.get_or_start_order_fsm(id)
+
+    case OrderFsmTransactor.verify(pid) do
+      :action_unavailable -> resp_with_json(conn, 401, %{error: "Action of verifying is unauthorized"})
+      updated_order -> resp_with_json(conn, 200, updated_order)
+    end
+  end
+
+  delete "/order/:id" do
     case Riak.delete(Riak.orders_bucket(), id) do
       {:ok, {204, _}} ->
         :timer.sleep(1000)
         send_resp(conn, 204, "")
-      {:error, {404, _}} -> not_found(conn, "Item not found")
+
+      {:error, {404, _}} ->
+        not_found(conn, "Item not found")
     end
   end
 

@@ -214,9 +214,6 @@ defmodule Riak do
     end)
   end
 
-  #   Before anything, we need to assure that all our values in the database have their status set to our FSM default state. We want that all the commands on Riak respect the following property:
-
-  # command.status.state == 'init'
   def initialize_commands(bucket) do
     keys = Poison.decode!(elem(Riak.get_keys(bucket), 1))["keys"]
     Task.async_stream(

@@ -115,7 +115,7 @@ function inferPropsChange(path, query, cookies) { // the second part of the onPa
 
   return addRemoteProps(browserState).then(
     (props) => {
-      setBrowserState(props)
+      setBrowserState({ ...props })
     })
 }
 
